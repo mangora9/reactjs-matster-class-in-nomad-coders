@@ -1,7 +1,18 @@
+const BASE_RUL = `https://api.coinpaprika.com/v1`;
 const fetchCoins = () => {
-  return fetch("https://api.coinpaprika.com/v1/coins").then((response) =>
+  return fetch(`${BASE_RUL}/coins`).then((response) => response.json());
+};
+
+const fetchCoinInfo = (coinId: string) => {
+  return fetch(`${BASE_RUL}/coins/${coinId}`).then((response) =>
     response.json(),
   );
 };
 
-export { fetchCoins };
+const fetchCoinTickers = (coinId: string) => {
+  return fetch(`${BASE_RUL}/tickers/${coinId}`).then((response) =>
+    response.json(),
+  );
+};
+
+export { fetchCoins, fetchCoinInfo, fetchCoinTickers };
