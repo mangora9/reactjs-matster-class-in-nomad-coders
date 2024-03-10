@@ -1,4 +1,15 @@
-function Chart() {
+// /src/routes/Chart.tsx
+import { useQuery } from "react-query";
+import { fetchCoinHistory } from "../api";
+
+interface ChartProps {
+  coinId: string;
+}
+
+function Chart({ coinId }: ChartProps) {
+  const { isLoading, data } = useQuery(["ohlcy", coinId], () =>
+    fetchCoinHistory(coinId),
+  );
   return <h1>Chart!</h1>;
 }
 
