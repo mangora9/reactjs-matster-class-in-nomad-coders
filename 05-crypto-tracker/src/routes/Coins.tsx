@@ -18,7 +18,7 @@ const Header = styled.header`
 const CoinsList = styled.ul``;
 const Coin = styled.li`
   background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
   a {
@@ -81,7 +81,7 @@ function Coins() {
                 }}
               >
                 <Img
-                  src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  src={`https://web.archive.org/web/20231231224919/https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                 />
                 {coin.name} &rarr;
               </Link>
