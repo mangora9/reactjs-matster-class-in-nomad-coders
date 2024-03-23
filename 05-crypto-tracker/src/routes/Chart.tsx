@@ -1,6 +1,8 @@
-import { useQuery } from "react-query";
-import { fetchCoinHistory } from "../api";
+import {useQuery} from "react-query";
+import {fetchCoinHistory} from "../api";
 import ApexChart from "react-apexcharts";
+import {useRecoilValue} from "recoil";
+import {isDarkAtom} from "../atoms";
 
 interface IHistorical {
   time_open: string;
@@ -17,10 +19,11 @@ interface ChartProps {
   coinId: string;
 }
 
-function Chart({ coinId }: ChartProps) {
-  const { isLoading, data } = useQuery<IHistorical[]>(["ohlcy", coinId], () =>
+function Chart({coinId}: ChartProps) {
+  const {isLoading, data} = useQuery<IHistorical[]>(["ohlcy", coinId], () =>
     fetchCoinHistory(coinId),
   );
+  const isDark = useRecoilValue(isDarkAtom);
   return (
     <div>
       {isLoading ? (
@@ -36,7 +39,7 @@ function Chart({ coinId }: ChartProps) {
           ]}
           options={{
             theme: {
-              mode: "dark",
+              mode: isDark ? "dark" : 'light',
             },
             chart: {
               height: 300,
@@ -49,11 +52,11 @@ function Chart({ coinId }: ChartProps) {
             grid: {
               show: false,
             },
-            yaxis: { show: false },
+            yaxis: {show: false},
             xaxis: {
-              labels: { show: false },
-              axisTicks: { show: false },
-              axisBorder: { show: false },
+              labels: {show: false},
+              axisTicks: {show: false},
+              axisBorder: {show: false},
               categories:
                 data?.map((price) =>
                   new Date(+price.time_close * 1000).toISOString(),
@@ -66,7 +69,7 @@ function Chart({ coinId }: ChartProps) {
             },
             fill: {
               type: "gradient",
-              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
+              gradient: {gradientToColors: ["#0be881"], stops: [0, 100]},
             },
             colors: ["#0fbcf9"],
             tooltip: {
