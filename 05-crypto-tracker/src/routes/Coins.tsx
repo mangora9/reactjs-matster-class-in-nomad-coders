@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { useQuery } from "react-query";
-import { fetchCoins } from "../api";
-import { Helmet } from "react-helmet";
+import {Link} from "react-router-dom";
+import {useQuery} from "react-query";
+import {fetchCoins} from "../api";
+import {Helmet} from "react-helmet";
 
 const Container = styled.div`
   padding: 0 20px;
@@ -21,12 +21,14 @@ const Coin = styled.li`
   color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
+
   a {
     display: flex;
     align-items: center;
     padding: 20px;
     transition: color 0.2s ease-in;
   }
+
   &:hover {
     a {
       color: ${(props) => props.theme.accentColor};
@@ -58,8 +60,12 @@ interface ICoin {
   type: string;
 }
 
-function Coins() {
-  const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+interface ICoinsProps {
+  toggleDark: () => void;
+}
+
+function Coins({toggleDark}: ICoinsProps) {
+  const {isLoading, data} = useQuery<ICoin[]>("allCoins", fetchCoins);
   return (
     <Container>
       <Helmet>
@@ -67,6 +73,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>코인</Title>
+        <button onClick={toggleDark}>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
@@ -77,7 +84,7 @@ function Coins() {
               <Link
                 to={{
                   pathname: `/${coin.id}`,
-                  state: { name: coin.name },
+                  state: {name: coin.name},
                 }}
               >
                 <Img
