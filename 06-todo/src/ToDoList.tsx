@@ -7,15 +7,29 @@ interface IForm {
   lastName: string;
   userName: string;
   password: string;
+  passwordConfirm: string;
+  extraError?: string;
 }
 
 const ToDoList = () => {
-  const {register, handleSubmit, formState: {errors}} = useForm<IForm>({
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+    setError
+  } = useForm<IForm>({
     defaultValues: {email: '@naver.com'}
   });
-  const onValid = (data: any) => {
-    console.log(`-> data`, data);
-  }
+  const onValid = (data: IForm) => {
+    if (data.password !== data.passwordConfirm) {
+      setError(
+        'passwordConfirm',
+        {message: 'Password are not same.'},
+        {shouldFocus: true}
+      );
+    }
+    // setError('extraError', {message: 'Server offline.'});
+  };
   return (
     <div>
       <form style={{display: "flex", flexDirection: 'column'}} onSubmit={handleSubmit(onValid)}>
@@ -29,7 +43,16 @@ const ToDoList = () => {
         <span>
           {errors?.email?.message}
         </span>
-        <input {...register('firstName', {required: 'write here!'})} placeholder="First Name"/>
+        <input
+          {...register('firstName', {
+            required: 'write here!',
+            validate: {
+              noMango: (value) => value.includes('mango') ? 'no mango allowed' : true,
+              noIn9: (value) => value.includes('in9') ? 'no in9 allowed' : true,
+            },
+          })}
+          placeholder="First Name"
+        />
         <span>
           {errors?.firstName?.message}
         </span>
@@ -37,7 +60,7 @@ const ToDoList = () => {
         <span>
           {errors?.lastName?.message}
         </span>
-        <input {...register('userName', {required: 'write here!', minLength: 10})} placeholder="User Name"/>
+        <input {...register('userName', {required: 'write here!', minLength: 5})} placeholder="User Name"/>
         <span>
           {errors?.userName?.message}
         </span>
@@ -52,10 +75,22 @@ const ToDoList = () => {
         <span>
           {errors?.password?.message}
         </span>
+        <input
+          {...register('passwordConfirm', {
+            required: "Password Confirm is Required",
+            minLength: {
+              value: 5,
+              message: 'Your password is too Short!!'
+            }
+          })} placeholder="Password Confirm"/>
+        <span>
+          {errors?.passwordConfirm?.message}
+        </span>
         <button>Add</button>
+        <span>{errors?.extraError?.message}</span>
       </form>
     </div>
   );
-}
+};
 
 export default ToDoList;
