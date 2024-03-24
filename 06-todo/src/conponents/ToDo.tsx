@@ -8,12 +8,14 @@ const ToDo = ({text, category, id}: IToDo) => {
     const {currentTarget: {name}} = event;
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
-      const oldToDo = oldToDos[targetIndex];
-      const newToDo = {text, id, name};
+      const newToDo = {text, id, category: name as any};
 
-      return oldToDos;
+      return [
+        ...oldToDos.slice(0, targetIndex),
+        newToDo,
+        ...oldToDos.slice(targetIndex + 1)
+      ];
     });
-    console.log(`-> newCategory`, name);
   };
   return (
     <li>
