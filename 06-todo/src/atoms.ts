@@ -1,14 +1,20 @@
 import {atom, selector} from "recoil";
 
+enum Categories {
+  'TO_DO' = 'TO_DO',
+  'DOING' = 'DOING',
+  'DONE' = 'DONE',
+}
+
 interface IToDo {
   id: number;
   text: string;
-  category: 'DONE' | 'DOING' | "TO_DO";
+  category: Categories;
 }
 
-const categoryState = atom({
+const categoryState = atom<Categories>({
   key: 'category',
-  default: 'TO_DO',
+  default: Categories.TO_DO,
 });
 
 const toDoState = atom<IToDo[]>({
@@ -26,6 +32,7 @@ const toDoSelector = selector({
 });
 
 export {
+  Categories,
   toDoState,
   categoryState,
   toDoSelector,
