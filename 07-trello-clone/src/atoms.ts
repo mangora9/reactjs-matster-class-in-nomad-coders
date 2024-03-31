@@ -7,9 +7,9 @@ interface IToDoState {
 const toDoState = atom<IToDoState>({
   key: 'toDo',
   default: {
-    toDo: ['a', 'b', 'c', 'd', 'e', 'f'],
-    doing: [],
-    done: [],
+    'To Do': ['a', 'b', 'c', 'd', 'e', 'f'],
+    'Doing': [],
+    'Done': [],
   }
 });
 
