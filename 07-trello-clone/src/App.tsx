@@ -1,6 +1,8 @@
 import React from "react";
-import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
+import {DragDropContext, Draggable, Droppable, DropResult} from 'react-beautiful-dnd';
 import styled from "styled-components";
+import {useRecoilState} from "recoil";
+import {toDoState} from "./atoms";
 
 const Wrapper = styled.div`
   display: flex;
@@ -31,10 +33,10 @@ const Card = styled.div`
   margin-bottom: 5px;
 `;
 
-const toDos = ['a', 'b', 'c', 'd', 'e', 'f'];
 
 function App() {
-  const onDragEnd = () => {
+  const [toDos, setToDos] = useRecoilState(toDoState);
+  const onDragEnd = ({destination, source}: DropResult) => {
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
@@ -43,19 +45,21 @@ function App() {
           <Droppable droppableId="one">
             {(magic) =>
               <Board ref={magic.innerRef} {...magic.droppableProps}>
-                {toDos.map((toDo, index) => <Draggable draggableId={toDo} index={index}>
-                    {
-                      (magic) =>
-                        <Card
-                          ref={magic.innerRef}
-                          {...magic.draggableProps}
-                          {...magic.dragHandleProps}
-                        >
-                          {toDo}
-                        </Card>
-                    }
-                  </Draggable>
-                )}
+                {
+                  toDos.map((toDo, index) =>
+                    <Draggable draggableId={toDo} index={index} key={`${toDo}_${index}`}>
+                      {
+                        (magic) =>
+                          <Card
+                            ref={magic.innerRef}
+                            {...magic.draggableProps}
+                            {...magic.dragHandleProps}
+                          >
+                            {toDo}
+                          </Card>
+                      }
+                    </Draggable>
+                  )}
                 {magic.placeholder}
               </Board>
             }
