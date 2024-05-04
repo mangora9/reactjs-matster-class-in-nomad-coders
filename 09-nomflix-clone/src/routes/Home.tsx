@@ -2,8 +2,8 @@ import React from 'react';
 
 const Home = () => {
   return (
-    <div style={{backgroundColor: 'black', height: '200vh'}}>
-      HOME
+    <div style={{backgroundColor: "whitesmoke", height: "200vh"}}>
+      home
     </div>
   );
 };
