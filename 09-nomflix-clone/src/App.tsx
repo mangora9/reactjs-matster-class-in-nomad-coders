@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Home from "./routes/Home";
 import Search from "./routes/Search";
 import Tv from "./routes/Tv";
- 
+
 function App() {
   return (
     <Router>
@@ -15,7 +15,7 @@ function App() {
         <Route path="/search">
           <Search/>
         </Route>
-        <Route path="/">
+        <Route path={["/", "/movies/:movieId"]}>
           <Home/>
         </Route>
       </Switch>
