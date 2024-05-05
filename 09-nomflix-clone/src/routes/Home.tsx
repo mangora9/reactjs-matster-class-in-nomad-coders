@@ -7,6 +7,7 @@ import {makeImagePath} from "../utils";
 import {useHistory, useRouteMatch} from "react-router-dom";
 
 const Wrapper = styled.div`
+  overflow-x: hidden;
   background: black;
   padding-bottom: 200px;
 `;
@@ -31,7 +32,7 @@ const Banner = styled.div<{ bgPhoto: string }>`
 
 const Title = styled.h2`
   font-size: 68px;
-  margin-bottom: 20px;;
+  margin-bottom: 20px;
 `;
 
 const Overview = styled.p`
