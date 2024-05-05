@@ -23,7 +23,7 @@ export interface IGetMoviesResult {
 // 이미지 예시
 // https://image.tmdb.org/t/p/original/kDp1vUBnMpe8ak4rjgl3cLELqjU.jpg
 export const getMovies = () => {
-  return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}&region=kr`).then(
+  return fetch(`${BASE_PATH}/movie/now_playing?api_key=${API_KEY}`).then(
     (response) => response.json()
   );
 };
